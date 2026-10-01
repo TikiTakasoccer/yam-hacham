@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* ====================================================================
+   ים חכם – design tokens
+   Light, sunny base (used outdoors in sunlight). Each sport/category
+   brings its own gradient via inline CSS vars (--c1 / --c2).
+   ==================================================================== */
+@theme {
+  --font-display: "Rubik", "Assistant", system-ui, sans-serif;
+  --font-sans: "Assistant", "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --color-ink: #0c2432;
+  --color-ink-soft: #4b6574;
+  --color-mist: #eef5f8;
+  --color-foam: #f7fbfc;
+  --color-line: #dce8ee;
+  --color-good: #10b981;
+  --color-okay: #84cc16;
+  --color-fair: #f59e0b;
+  --color-poor: #f97316;
+  --color-bad: #f43f5e;
+}
+
+/* tokens the engine's SVG generators (rigs, lures, compass) read */
+:root {
+  --bg: #ffffff; --fg: #0c2432; --muted: #5b7482; --line: #d3e2e9; --surface: #ffffff; --surface-2: #eef5f8;
+  --accent: #f59e0b; --sea: #0891b2; --lead: #7b8a93; --bead: #e11d48;
+  --good: #10b981; --warn: #f59e0b; --bad: #f43f5e;
+  --c1: #0369a1; --c2: #22d3ee;
+  color-scheme: light;
+}
+
+html, body { background: #f3f8fa; color: var(--color-ink); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--c1, #0284c7) 60%, white); outline-offset: 2px; }
+button { -webkit-tap-highlight-color: transparent; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+span[dir="ltr"] { white-space: nowrap; unicode-bidi: isolate; }
+
+/* sport gradient helpers */
+.bg-sport { background: linear-gradient(135deg, var(--c1), var(--c2)); }
+.text-sport { color: var(--c1); }
+.bg-sport-soft { background: color-mix(in srgb, var(--c1) 10%, white); }
+.ring-sport { box-shadow: 0 0 0 2px color-mix(in srgb, var(--c1) 55%, white); }
+.glass { background: rgb(255 255 255 / .16); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgb(255 255 255 / .28); }
+.glass-strong { background: rgb(255 255 255 / .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* ---------------- scene animations ---------------- */
+.scene * { transform-box: fill-box; }
+@keyframes wave-x { to { transform: translateX(-400px); } }
+.wave-1 { animation: wave-x 9s linear infinite; }
+.wave-2 { animation: wave-x 14s linear infinite reverse; }
+.wave-3 { animation: wave-x 20s linear infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(-2deg); } }
+.bob { animation: bob 3.2s ease-in-out infinite; transform-origin: center bottom; }
+@keyframes bob-soft { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.bob-soft { animation: bob-soft 4s ease-in-out infinite; }
+@keyframes ride { 0%,100% { transform: translate(0,0) rotate(-3deg); } 50% { transform: translate(-18px,-6px) rotate(2deg); } }
+.ride { animation: ride 5s ease-in-out infinite; transform-origin: center; }
+@keyframes sway { 0%,100% { transform: rotate(-9deg); } 50% { transform: rotate(7deg); } }
+.sway { animation: sway 4.5s ease-in-out infinite; transform-box: view-box; }
+@keyframes stroke { 0%,100% { transform: rotate(-24deg); } 50% { transform: rotate(22deg); } }
+.stroke-anim { animation: stroke 2.2s ease-in-out infinite; transform-box: view-box; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-460px); } }
+.drift-1 { animation: drift 60s linear infinite; }
+.drift-2 { animation: drift 90s linear infinite; animation-delay: -30s; }
+@keyframes swim-x { from { transform: translateX(120px); } to { transform: translateX(-520px); } }
+.fish-1 { animation: swim-x 14s linear infinite; }
+.fish-2 { animation: swim-x 19s linear infinite; animation-delay: -7s; }
+.fish-3 { animation: swim-x 23s linear infinite; animation-delay: -15s; }
+@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translateY(-140px); opacity: 0; } }
+.bubble { animation: rise 5s ease-in infinite; }
+@keyframes glow { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.08); } }
+.glow { animation: glow 5s ease-in-out infinite; transform-origin: center; }
+@keyframes flap { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.45); } }
+.flap { animation: flap .9s ease-in-out infinite; transform-origin: center; }
+@keyframes fly { from { transform: translateX(0); } to { transform: translateX(-520px); } }
+.fly-1 { animation: fly 26s linear infinite; }
+.fly-2 { animation: fly 34s linear infinite; animation-delay: -12s; }
+@keyframes jump { 0%,100% { transform: translateY(0); } 45% { transform: translateY(-34px); } 60% { transform: translateY(-34px); } }
+.jump { animation: jump 2.4s cubic-bezier(.3,.7,.4,1) infinite; }
+@keyframes ball-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-46px); } }
+.ball-bounce { animation: ball-bounce 1.6s cubic-bezier(.5,0,.5,1) infinite; }
+@keyframes kick { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-38deg); } }
+.kick { animation: kick 2s ease-in-out infinite; transform-box: view-box; }
+@keyframes shimmer { 0%,100% { opacity: .08; } 50% { opacity: .2; } }
+.shimmer { animation: shimmer 6s ease-in-out infinite; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 3s linear infinite; transform-origin: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene *, .scene { animation: none !important; }
+}
